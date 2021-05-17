@@ -62,6 +62,18 @@ app.get("/results/:ingredient", function (req, res) {
   });
 });
 
+app.get("/drinks/:idDrink", function (req, res) {
+  // console.log(userInput);
+  let idDrink = req.params.idDrink;
+  let drinkInfo = `http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
+  // Use request to call the API
+  axios.get(drinkInfo).then((response) => {
+    let drinkInfo = response.data;
+    console.log(drinkInfo);
+    res.render("details", { drinkInfo: response.data });
+  });
+});
+
 // Add this below /auth controllers
 app.get("/profile", isLoggedIn, (req, res) => {
   const { id, name, email } = req.user.get();

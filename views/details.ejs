@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col poster"><img src="<%= drinkInfo['strDrinkThumb'] %>" /></div>
+  <div class="col">
+    <h2><%= drinkInfo['idDrink'] %></h2>
+    <h3><%= drinkInfo.drinks[0].strDrink %></h3>
+    <br />
+    <form action="/faves" method="POST">
+      <input type="hidden" name="title" value="<%= drinkInfo['strDrink'] %>" />
+      <input type="hidden" name="imdbid" value="<%= drinkInfo['idDrink'] %>" />
+      <input type="submit" value="Add to Favorites" />
+    </form>
+  </div>
+</div>
