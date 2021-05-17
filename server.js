@@ -6,6 +6,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("./config/ppConfig");
 const isLoggedIn = require("./middleware/isLoggedIn");
+const axios = require("axios");
 
 const SECRET_SESSION = process.env.SECRET_SESSION;
 
@@ -44,6 +45,22 @@ app.get("/", (req, res) => {
 // });
 
 app.use("/auth", require("./controllers/auth"));
+
+app.get("/results", function (req, res) {
+  res.render("results");
+});
+
+app.get("/results/:ingredient", function (req, res) {
+  let userInput = req.query.q;
+  console.log(userInput);
+  let results = `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${userInput}`;
+  // Use request to call the API
+  axios.get(results).then((response) => {
+    let results = response.data;
+    console.log(results);
+    res.render("results");
+  });
+});
 
 // Add this below /auth controllers
 app.get("/profile", isLoggedIn, (req, res) => {

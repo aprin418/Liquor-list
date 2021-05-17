@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/romebell/express-authentication#readme",
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
@@ -32,6 +32,7 @@
     "express-sessions": "^1.0.6",
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
+    "node": "^16.1.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "pg": "^8.6.0",
@@ -41,5 +42,6 @@
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "supertest": "^6.0.1"
-  }
+  },
+  "keywords": []
 }
