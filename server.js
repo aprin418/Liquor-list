@@ -46,11 +46,11 @@ app.get("/", (req, res) => {
 
 app.use("/auth", require("./controllers/auth"));
 
-app.get("/results", function (req, res) {
-  res.render("results");
+app.get("/home", function (req, res) {
+  res.render("home");
 });
 
-app.get("/results/:ingredient", function (req, res) {
+app.get("/home/:ingredient", function (req, res) {
   let userInput = req.query.q;
   console.log(userInput);
   let results = `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${userInput}`;
@@ -58,7 +58,7 @@ app.get("/results/:ingredient", function (req, res) {
   axios.get(results).then((response) => {
     let results = response.data;
     console.log(results);
-    res.render("results");
+    res.render("home");
   });
 });
 
