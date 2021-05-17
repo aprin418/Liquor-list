@@ -1,0 +1,9 @@
+<h1>Results</h1>
+
+<ul>
+  <% results['drinks'].forEach(function(drinks) {%>
+  <li>
+    <a href="/drinks/<%= drinks['idDrink'] %>"> <%= drinks['strDrink'] %> </a>
+  </li>
+  <% }); %>
+</ul>

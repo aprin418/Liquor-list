@@ -50,15 +50,15 @@ app.get("/home", function (req, res) {
   res.render("home");
 });
 
-app.get("/home/:ingredient", function (req, res) {
+app.get("/results/:ingredient", function (req, res) {
   let userInput = req.query.q;
-  console.log(userInput);
+  // console.log(userInput);
   let results = `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${userInput}`;
   // Use request to call the API
   axios.get(results).then((response) => {
     let results = response.data;
     console.log(results);
-    res.render("home");
+    res.render("results", { results: response.data });
   });
 });
 
