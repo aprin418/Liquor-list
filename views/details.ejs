@@ -7,28 +7,18 @@
 <br>
 <h4>Ingredients</h4>
 <ul>
-    <li><%= drinkInfo.drinks[0].strIngredient1 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient2 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient3 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient4 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient5 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient6 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient7 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient8 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient9 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient10 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient11 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient12 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient13 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient14 %></li>
-    <li><%= drinkInfo.drinks[0].strIngredient15 %></li>
+    <% drinkIngredient.forEach(eachIng => { %>
+       <% if (eachIng !== null) { %>
+        <li><%= eachIng %> </li>
+        <% } %> 
+    <% }) %> 
 </ul>
 <p>Instructions</p>
 <p><%= drinkInfo.drinks[0].strInstructions %> </p>
     <br>
+    <p><%= drinkInfo.drinks[0].strDrink %>TEST TEST TEST TEST TEST </p>
     <form action="/faves" method="POST">
-      <input type="hidden" name="title" value="<%= drinkInfo['strDrink'] %>" />
-      <input type="hidden" name="imdbid" value="<%= drinkInfo['idDrink'] %>" />
+      <input type="hidden" name="title" value="<%= drinkInfo.drinks[0].strDrink %>" />
       <input type="submit" value="Add to Favorites" />
     </form>
   </div>

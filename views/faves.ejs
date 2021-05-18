@@ -1,0 +1,8 @@
+<h1>Favorite Drinks</h1>
+
+<% foundFaves.forEach(function(fave){ %>
+<li><%= fave.dataValues.name %></li>
+<form method="POST" action="/faves/<%=fave.dataValues.id %>?_method=DELETE">
+  <button>Delete</button>
+</form>
+<% }) %>

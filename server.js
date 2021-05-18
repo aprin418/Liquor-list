@@ -7,6 +7,8 @@ const flash = require("connect-flash");
 const passport = require("./config/ppConfig");
 const isLoggedIn = require("./middleware/isLoggedIn");
 const axios = require("axios");
+const db = require("./models");
+const methodOverride = require("method-override");
 
 const SECRET_SESSION = process.env.SECRET_SESSION;
 
@@ -23,6 +25,7 @@ app.use(
 app.use(flash());
 app.use(passport.initialize()); // Initialize passport
 app.use(passport.session()); // Add a session
+app.use(methodOverride("_method"));
 
 app.use((req, res, next) => {
   console.log(res.locals);
@@ -62,16 +65,62 @@ app.get("/results/:ingredient", function (req, res) {
   });
 });
 
+//prettier-ignore
 app.get("/drinks/:idDrink", function (req, res) {
   // console.log(userInput);
   let idDrink = req.params.idDrink;
   let drinkInfo = `http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
   // Use request to call the API
   axios.get(drinkInfo).then((response) => {
-    let drinkInfo = response.data;
+    let ingArray = [];
+    let drinkInfo = response.data.drinks[0];
+    for (const [key, value] of Object.entries(drinkInfo)) {
+      if (key.includes("strIngredient")) {
+        ingArray.push(value);
+      }
+    }
+    // console.log('Here is drink info')
     console.log(drinkInfo);
-    res.render("details", { drinkInfo: response.data });
+    // console.log(drinkInfo);
+    res.render("details", { drinkIngredient: ingArray, drinkInfo: response.data });
   });
+});
+
+app.post("/faves", function (req, res) {
+  db.faves
+    .findOrCreate({
+      where: {
+        name: req.body.title,
+      },
+    })
+    .then(() => {
+      res.redirect("/faves");
+    });
+});
+
+app.get("/faves", (req, res) => {
+  db.faves.findAll().then((result) => {
+    console.log(result);
+    // let array = [];
+    // result.forEach((drinkName) => {
+    //   array.push(drinkName.dataValues.name);
+    // });
+    // console.log("this is an array", array);
+    res.render("faves", { foundFaves: result });
+  });
+});
+
+app.delete("/faves/:id", (req, res) => {
+  db.faves.destroy({
+    where: {
+      id: req.params.id,
+    },
+  });
+  res.redirect("/faves");
+});
+
+app.get("/myob", isLoggedIn, (req, res) => {
+  res.render("myob");
 });
 
 // Add this below /auth controllers
