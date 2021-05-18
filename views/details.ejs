@@ -1,9 +1,31 @@
-<div class="row">
-  <div class="col poster"><img src="<%= drinkInfo['strDrinkThumb'] %>" /></div>
-  <div class="col">
-    <h2><%= drinkInfo['idDrink'] %></h2>
-    <h3><%= drinkInfo.drinks[0].strDrink %></h3>
-    <br />
+<h3><%= drinkInfo.drinks[0].strDrink %></h3>
+<img
+      src="<%= drinkInfo.drinks[0].strDrinkThumb %>"
+      alt="image of <%= drinkInfo.drinks[0].strDrink %>"
+      style="height: 200px; width: auto"
+    />
+<br>
+<h4>Ingredients</h4>
+<ul>
+    <li><%= drinkInfo.drinks[0].strIngredient1 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient2 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient3 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient4 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient5 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient6 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient7 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient8 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient9 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient10 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient11 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient12 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient13 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient14 %></li>
+    <li><%= drinkInfo.drinks[0].strIngredient15 %></li>
+</ul>
+<p>Instructions</p>
+<p><%= drinkInfo.drinks[0].strInstructions %> </p>
+    <br>
     <form action="/faves" method="POST">
       <input type="hidden" name="title" value="<%= drinkInfo['strDrink'] %>" />
       <input type="hidden" name="imdbid" value="<%= drinkInfo['idDrink'] %>" />
