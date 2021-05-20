@@ -99,7 +99,7 @@ app.get("/drinks/name/:name", function (req, res) {
   let drinkName = `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`;
   // Use request to call the API
   axios.get(drinkName).then((response) => {
-    console.log(drinkName);
+    // console.log(drinkName);
     let ingArray = [];
     let drinkInfo = response.data.drinks[0];
     for (const [key, value] of Object.entries(drinkInfo)) {
@@ -116,6 +116,7 @@ app.get("/drinks/name/:name", function (req, res) {
         amountArray.push(value);
       }
     }
+    db.note.findAll();
     // console.log(drinkInfo);
     res.render("favesDetails", {
       drinkIngredient: ingArray,
@@ -132,20 +133,20 @@ app.post("/faves", function (req, res) {
         name: req.body.title,
       },
     })
-    .then(() => {
+    .then((createdFaves) => {
+      // console.log("Here is created faves");
+      // console.log(createdFaves);
       res.redirect("/faves");
     });
 });
 
 app.get("/faves", (req, res) => {
   db.faves.findAll().then((result) => {
+    console.log("____________________found faves________________");
     console.log(result);
-    // let array = [];
-    // result.forEach((drinkName) => {
-    //   array.push(drinkName.dataValues.name);
-    // });
-    // console.log("this is an array", array);
-    res.render("faves", { foundFaves: result });
+    db.note.findAll().then((resultNote) => {
+      res.render("faves", { foundFaves: result, foundNotes: resultNote });
+    });
   });
 });
 
@@ -160,6 +161,33 @@ app.delete("/faves/:id", (req, res) => {
 
 app.get("/myob", isLoggedIn, (req, res) => {
   res.render("myob");
+});
+
+// app.put('/edit:id', (req, res) => {
+//   db.comment.update(
+//     req.body,
+//     {
+//       where: {id: req.params.id}
+//     }
+//   ).then( updateComment => {
+//     console.log("Comment Updated")
+//     res.redirect()
+//   })
+// })
+
+app.post("/notes", isLoggedIn, function (req, res) {
+  let userInfo = req.user.get();
+  db.note
+    .create({
+      userId: userInfo.id,
+      content: req.body.note,
+      faveId: req.body.drinkId,
+    })
+    .then((createdNote) => {
+      console.log("_______created note_______");
+      console.log(createdNote);
+      res.redirect("/faves");
+    });
 });
 
 // Add this below /auth controllers

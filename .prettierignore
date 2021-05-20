@@ -1,2 +1,3 @@
 views/partials/alerts.ejs
 views/layout.ejs
+faves.ejs

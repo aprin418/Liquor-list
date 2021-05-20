@@ -8,7 +8,24 @@
     >
   </li>
 </ul>
-<form method="POST" action="/faves/<%=fave.dataValues.id %>?_method=DELETE">
-  <button>Delete</button>
+<% foundNotes.forEach(eachNote => { %>
+  <% if (eachNote.faveId === fave.id) { %> 
+<p><%= eachNote.dataValues.content %></p>
+  <% } %> 
+<% }) %>
+<form action="/notes" method="POST">
+  <input type="text" name="note" id="note" />
+  <input type="hidden" name="drinkId" value="<%= fave.dataValues.id %>" />
 </form>
+<div class="btn-group">
+  <form method="POST" action="/faves/<%=fave.dataValues.id %>?_method=DELETE">
+    <button class="btn btn-danger">Delete</button>
+  </form>
+  <form>
+    <button class="btn btn-success">Update</button>
+  </form>
+  <form>
+    <button class="btn btn-warning">Remove Note</button>
+  </form>
+</div>
 <% }) %>
