@@ -3,7 +3,7 @@
 <ul>
   <% results['drinks'].forEach(function(drinks) {%>
   <li>
-    <a href="/drinks/<%= drinks['idDrink'] %>"> <%= drinks['strDrink'] %> </a>
+    <a href="/drinks/<%= drinks.idDrink %>"> <%= drinks.strDrink %> </a>
   </li>
   <li><%= drinks['strDrinkThumb'] %></li>
   <% }); %>

@@ -14,18 +14,16 @@
     <% }) %> 
 </ul>
 <ul>
-  <% drinkInstructions.forEach(eachDir => { %>
-     <% if (eachDir !== null) { %>
-      <li><%= eachDir %> </li>
-      <% } %> 
-  <% }) %> 
-</ul>
-<p>Instructions</p>
+    <% drinkInstructions.forEach(eachDir => { %>
+       <% if (eachDir !== null) { %>
+        <li><%= eachDir %> </li>
+        <% } %> 
+    <% }) %> 
+  </ul>
+<h4>Instructions</h4>
 <p><%= drinkInfo.drinks[0].strInstructions %> </p>
     <br>
-    <form action="/faves" method="POST">
-      <input type="hidden" name="title" value="<%= drinkInfo.drinks[0].strDrink %>" />
-      <input type="submit" value="Add to Favorites" />
-    </form>
+<p>Your Notes:</p>
+<button>Edit</button>
   </div>
 </div>

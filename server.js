@@ -80,9 +80,48 @@ app.get("/drinks/:idDrink", function (req, res) {
       }
     }
     // console.log('Here is drink info')
-    console.log(drinkInfo);
     // console.log(drinkInfo);
-    res.render("details", { drinkIngredient: ingArray, drinkInfo: response.data });
+    // console.log(drinkInfo);
+    let amountArray = [];
+    // let drinkInfo = response.data.drinks[0];
+    for (const [key, value] of Object.entries(drinkInfo)) {
+      if (key.includes("strMeasure")) {
+        amountArray.push(value);
+      }
+    }
+    res.render("details", { drinkIngredient: ingArray, drinkInfo: response.data, drinkInstructions: amountArray });
+  });
+});
+
+app.get("/drinks/name/:name", function (req, res) {
+  // console.log(userInput);
+  let name = req.params.name;
+  let drinkName = `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`;
+  // Use request to call the API
+  axios.get(drinkName).then((response) => {
+    console.log(drinkName);
+    let ingArray = [];
+    let drinkInfo = response.data.drinks[0];
+    for (const [key, value] of Object.entries(drinkInfo)) {
+      if (key.includes("strIngredient")) {
+        ingArray.push(value);
+      }
+    }
+    // console.log('Here is drink info')
+    // console.log(drinkInfo);
+    let amountArray = [];
+    // let drinkInfo = response.data.drinks[0];
+    for (const [key, value] of Object.entries(drinkInfo)) {
+      if (key.includes("strMeasure")) {
+        amountArray.push(value);
+      }
+    }
+    // console.log(drinkInfo);
+    res.render("favesDetails", {
+      drinkIngredient: ingArray,
+      drinkInfo: response.data,
+      drinkInstructions: amountArray,
+    });
   });
 });
 
