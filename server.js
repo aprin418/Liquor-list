@@ -196,6 +196,21 @@ app.get("/profile", isLoggedIn, (req, res) => {
   res.render("profile", { id, name, email });
 });
 
+//prettier-ignore
+app.put("/faves/:id", (req, res) => {
+  let noteId = req.params.id;
+  // console.log(
+  //   "++++++++++++++++++note id++++++++++++++++++++++++++++++++++++++++"
+  // );
+  // console.log(noteId);
+  db.note.update({ content: req.body.update }, { where: {id: noteId} })
+    .then(function (updateNote) {
+      console.log("____________updated note________________");
+      console.log(updateNote);
+      res.redirect("/faves");
+    });
+});
+
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
