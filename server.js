@@ -62,6 +62,7 @@ app.get("/results/:ingredient", function (req, res) {
     let results = response.data;
     console.log(results);
     res.render("results", { results: response.data });
+    // console.log(results.response.data);
   });
 });
 

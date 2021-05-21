@@ -1,10 +1,20 @@
-<h1>Results</h1>
+<div class="container">
+  <div class="row">
+    <h1>Results</h1>
 
-<ul>
-  <% results['drinks'].forEach(function(drinks) {%>
-  <li>
-    <a href="/drinks/<%= drinks.idDrink %>"> <%= drinks.strDrink %> </a>
-  </li>
-  <li><%= drinks['strDrinkThumb'] %></li>
-  <% }); %>
-</ul>
+    <ul>
+      <% results.drinks.forEach(function(drinks) {%>
+      <li>
+        <a href="/drinks/<%= drinks.idDrink %>"> <%= drinks.strDrink %> </a>
+      </li>
+      <a href="/drinks/<%= drinks.idDrink %>">
+        <img
+          src="<%= drinks.strDrinkThumb %>"
+          alt="<%= drinks.strDrink  %>"
+          style="height: 125px; width: auto"
+        />
+      </a>
+      <% }); %>
+    </ul>
+  </div>
+</div>
