@@ -1,31 +1,42 @@
-<h3><%= drinkInfo.drinks[0].strDrink %></h3>
-<img
+<div class="container">
+  <div class="row">
+    <h3><%= drinkInfo.drinks[0].strDrink %></h3>
+    <img
       src="<%= drinkInfo.drinks[0].strDrinkThumb %>"
       alt="image of <%= drinkInfo.drinks[0].strDrink %>"
       style="height: 200px; width: auto"
     />
-<br>
-<h4>Ingredients</h4>
-<ul>
-    <% drinkIngredient.forEach(eachIng => { %>
-       <% if (eachIng !== null) { %>
-        <li><%= eachIng %> </li>
-        <% } %> 
-    <% }) %> 
-</ul>
-<ul>
-  <% drinkInstructions.forEach(eachDir => { %>
-     <% if (eachDir !== null) { %>
-      <li><%= eachDir %> </li>
-      <% } %> 
-  <% }) %> 
-</ul>
-<p>Instructions</p>
-<p><%= drinkInfo.drinks[0].strInstructions %> </p>
-    <br>
+    <br />
+    <h4>Ingredients</h4>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ul class="no-bullets">
+        <% drinkInstructions.forEach(eachDir => { %> <% if (eachDir !== null) {
+        %>
+        <li><%= eachDir %></li>
+        <% } %> <% }) %>
+      </ul>
+    </div>
+    <div class="col">
+      <ul class="no-bullets">
+        <% drinkIngredient.forEach(eachIng => { %> <% if (eachIng !== null) { %>
+        <li><%= eachIng %></li>
+        <% } %> <% }) %>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <h4>Instructions</h4>
+    <p><%= drinkInfo.drinks[0].strInstructions %></p>
+    <br />
     <form action="/faves" method="POST">
-      <input type="hidden" name="title" value="<%= drinkInfo.drinks[0].strDrink %>" />
-      <input type="submit" value="Add to Favorites" />
+      <input
+        type="hidden"
+        name="title"
+        value="<%= drinkInfo.drinks[0].strDrink %>"
+      />
+      <button class="btn btn-primary">Add to Favorites</button>
     </form>
   </div>
 </div>

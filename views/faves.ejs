@@ -1,32 +1,36 @@
 
-<h1>Favorite Drinks</h1>
+<div class="container">
+  <div class="row">
+    <h1>Favorite Drinks</h1>
 
-<% foundFaves.forEach(function(fave){ %>
-<ul>
-  <li>
-    <a href="/drinks/name/<%= fave.dataValues.name %> "
-      ><%= fave.dataValues.name %></a>
-  </li>
-</ul>
-  <% if (foundNotes.length === 1) { %> 
-    <% foundNotes.forEach(eachNote => { %>
-      <% if (eachNote.faveId === fave.id) { %> 
-        <p><%= eachNote.dataValues.content %></p>
-          <form method="POST" action="/faves/<%=eachNote.dataValues.id %>?_method=PUT">
-            <input type="text" name="update" id="update">
-            <button class="btn btn-success">Update</button>
-          </form>
+    <% foundFaves.forEach(function(fave){ %>
+    <ul class="no-bullets">
+      <li>
+        <a href="/drinks/name/<%= fave.dataValues.name %> "
+          ><%= fave.dataValues.name %></a>
+      </li>
+    </ul>
+      <% if (foundNotes.length === 1) { %> 
+        <% foundNotes.forEach(eachNote => { %>
+          <% if (eachNote.faveId === fave.id) { %> 
+            <p><%= eachNote.dataValues.content %></p>
+              <form method="POST" action="/faves/<%=eachNote.dataValues.id %>?_method=PUT">
+                <input type="text" name="update" id="update">
+                <button class="btn btn-success">Update</button>
+              </form>
+          <% } %> 
+        <% }) %>
+      <% } else { %> 
+          <form action="/notes" method="POST">
+            <input type="text" name="note" id="note" placeholder="Enter a note" />
+            <input type="hidden" name="drinkId" value="<%= fave.dataValues.id %>" />
+        </form>
       <% } %> 
+    <div class="row">
+      <form method="POST" action="/faves/<%=fave.dataValues.id %>?_method=DELETE">
+        <button class="btn btn-danger">Delete Favorite</button>
+      </form>
+    </div>
     <% }) %>
-  <% } else { %> 
-      <form action="/notes" method="POST">
-        <input type="text" name="note" id="note" />
-        <input type="hidden" name="drinkId" value="<%= fave.dataValues.id %>" />
-    </form>
-  <% } %> 
-<div class="btn-group">
-  <form method="POST" action="/faves/<%=fave.dataValues.id %>?_method=DELETE">
-    <button class="btn btn-danger">Delete Favorite</button>
-  </form>
+  </div>
 </div>
-<% }) %>
