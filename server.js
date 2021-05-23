@@ -94,7 +94,8 @@ app.get("/drinks/:idDrink", function (req, res) {
   });
 });
 
-app.get("/drinks/name/:name", function (req, res) {
+app.post("/drinks/name/:name", function (req, res) {
+  let drinkId = req.body.drinkId;
   // console.log(userInput);
   let name = req.params.name;
   let drinkName = `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`;
@@ -117,21 +118,34 @@ app.get("/drinks/name/:name", function (req, res) {
         amountArray.push(value);
       }
     }
-    db.note.findAll();
-    // console.log(drinkInfo);
-    res.render("favesDetails", {
-      drinkIngredient: ingArray,
-      drinkInfo: response.data,
-      drinkInstructions: amountArray,
-    });
+    db.note
+      .findAll({
+        where: {
+          // this is what ties a note to its favorite
+          faveId: drinkId,
+        },
+      })
+      .then((foundNotes) => {
+        console.log("=======================found notes================");
+        console.log(foundNotes);
+        res.render("favesDetails", {
+          drinkIngredient: ingArray,
+          drinkInfo: response.data,
+          drinkInstructions: amountArray,
+          allNotes: foundNotes,
+          drinkId: drinkId,
+        });
+      });
   });
 });
 
-app.post("/faves", function (req, res) {
+app.post("/faves", isLoggedIn, function (req, res) {
+  let userInfo = req.user.get();
   db.faves
     .findOrCreate({
       where: {
         name: req.body.title,
+        userId: userInfo.id,
       },
     })
     .then((createdFaves) => {
@@ -153,6 +167,15 @@ app.get("/faves", (req, res) => {
 
 app.delete("/faves/:id", (req, res) => {
   db.faves.destroy({
+    where: {
+      id: req.params.id,
+    },
+  });
+  res.redirect("/faves");
+});
+
+app.delete("/notes/:id", (req, res) => {
+  db.note.destroy({
     where: {
       id: req.params.id,
     },

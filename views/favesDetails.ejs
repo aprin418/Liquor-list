@@ -30,5 +30,24 @@
     <h4>Instructions</h4>
     <p><%= drinkInfo.drinks[0].strInstructions %></p>
     <br />
+    <h4>Notes:</h4>
+    <% if (allNotes.length === 1) { %> 
+      <% allNotes.forEach(eachNote => { %>
+        <p><%= eachNote.dataValues.content%></p>
+        <form method="POST" action="/faves/<%=eachNote.dataValues.id %>?_method=PUT">
+          <input type="text" name="update" id="update">
+          <button class="btn btn-success">Update</button>
+        </form>
+        <form method="POST" action="/notes/<%=eachNote.dataValues.id %>?_method=DELETE">
+        <button class="btn btn-danger">Delete</button>
+      </form>
+      <% }) %> 
+    <% } else { %>
+      <form action="/notes" method="POST">
+        <input type="text" name="note" id="note" />
+        <input type="hidden" name="drinkId" value="<%= drinkId %>" />
+        <button type="submit">Submit</button>
+      </form>
+      <% } %>
+    </div>
   </div>
-</div>
