@@ -5,10 +5,13 @@
 <% foundFaves.forEach(function(fave){ %>
 <ul>
   <li>
-    <p><%= fave.dataValues.name %></p>
+    <h4><%= fave.dataValues.name %></h4>
       <form method="POST" action="/drinks/name/<%= fave.dataValues.name %>">
         <input type="hidden" name="drinkId" id="drinkId" value="<%= fave.dataValues.id %>">
-        <button>Name</button>
+        <button class="btn btn-primary">Details</button>
+      </form>
+      <form method="POST" action="/faves/<%=fave.dataValues.id %>?_method=DELETE">
+        <button class="btn btn-danger">Remove Favorite</button>
       </form>
   </li>
 </ul>

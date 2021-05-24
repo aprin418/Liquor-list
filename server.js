@@ -16,15 +16,15 @@ app.set("view engine", "ejs");
 
 app.use(
   session({
-    secret: SECRET_SESSION, // What we actually will be giving the user on our site as a session cookie
-    resave: false, // Save the session even if it's modified, make this false
-    saveUninitialized: true, // If we have a new session, we save it, therefore making that true
+    secret: SECRET_SESSION,
+    resave: false,
+    saveUninitialized: true,
   })
 );
 
 app.use(flash());
-app.use(passport.initialize()); // Initialize passport
-app.use(passport.session()); // Add a session
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(methodOverride("_method"));
 
 app.use((req, res, next) => {
@@ -43,10 +43,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// app.get("/profile", (req, res) => {
-//   res.render("profile");
-// });
-
 app.use("/auth", require("./controllers/auth"));
 
 app.get("/home", function (req, res) {
@@ -55,23 +51,18 @@ app.get("/home", function (req, res) {
 
 app.get("/results/:ingredient", function (req, res) {
   let userInput = req.query.q;
-  // console.log(userInput);
   let results = `http://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${userInput}`;
-  // Use request to call the API
   axios.get(results).then((response) => {
     let results = response.data;
     console.log(results);
     res.render("results", { results: response.data });
-    // console.log(results.response.data);
   });
 });
 
 //prettier-ignore
 app.get("/drinks/:idDrink", function (req, res) {
-  // console.log(userInput);
   let idDrink = req.params.idDrink;
   let drinkInfo = `http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
-  // Use request to call the API
   axios.get(drinkInfo).then((response) => {
     let ingArray = [];
     let drinkInfo = response.data.drinks[0];
@@ -80,11 +71,7 @@ app.get("/drinks/:idDrink", function (req, res) {
         ingArray.push(value);
       }
     }
-    // console.log('Here is drink info')
-    // console.log(drinkInfo);
-    // console.log(drinkInfo);
     let amountArray = [];
-    // let drinkInfo = response.data.drinks[0];
     for (const [key, value] of Object.entries(drinkInfo)) {
       if (key.includes("strMeasure")) {
         amountArray.push(value);
@@ -96,12 +83,9 @@ app.get("/drinks/:idDrink", function (req, res) {
 
 app.post("/drinks/name/:name", function (req, res) {
   let drinkId = req.body.drinkId;
-  // console.log(userInput);
   let name = req.params.name;
   let drinkName = `http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`;
-  // Use request to call the API
   axios.get(drinkName).then((response) => {
-    // console.log(drinkName);
     let ingArray = [];
     let drinkInfo = response.data.drinks[0];
     for (const [key, value] of Object.entries(drinkInfo)) {
@@ -109,10 +93,7 @@ app.post("/drinks/name/:name", function (req, res) {
         ingArray.push(value);
       }
     }
-    // console.log('Here is drink info')
-    // console.log(drinkInfo);
     let amountArray = [];
-    // let drinkInfo = response.data.drinks[0];
     for (const [key, value] of Object.entries(drinkInfo)) {
       if (key.includes("strMeasure")) {
         amountArray.push(value);
@@ -121,13 +102,10 @@ app.post("/drinks/name/:name", function (req, res) {
     db.note
       .findAll({
         where: {
-          // this is what ties a note to its favorite
           faveId: drinkId,
         },
       })
       .then((foundNotes) => {
-        console.log("=======================found notes================");
-        console.log(foundNotes);
         res.render("favesDetails", {
           drinkIngredient: ingArray,
           drinkInfo: response.data,
@@ -149,16 +127,12 @@ app.post("/faves", isLoggedIn, function (req, res) {
       },
     })
     .then((createdFaves) => {
-      // console.log("Here is created faves");
-      // console.log(createdFaves);
       res.redirect("/faves");
     });
 });
 
 app.get("/faves", (req, res) => {
   db.faves.findAll().then((result) => {
-    console.log("____________________found faves________________");
-    console.log(result);
     db.note.findAll().then((resultNote) => {
       res.render("faves", { foundFaves: result, foundNotes: resultNote });
     });
@@ -187,18 +161,6 @@ app.get("/myob", isLoggedIn, (req, res) => {
   res.render("myob");
 });
 
-// app.put('/edit:id', (req, res) => {
-//   db.comment.update(
-//     req.body,
-//     {
-//       where: {id: req.params.id}
-//     }
-//   ).then( updateComment => {
-//     console.log("Comment Updated")
-//     res.redirect()
-//   })
-// })
-
 app.post("/notes", isLoggedIn, function (req, res) {
   let userInfo = req.user.get();
   db.note
@@ -214,7 +176,6 @@ app.post("/notes", isLoggedIn, function (req, res) {
     });
 });
 
-// Add this below /auth controllers
 app.get("/profile", isLoggedIn, (req, res) => {
   const { id, name, email } = req.user.get();
   res.render("profile", { id, name, email });
@@ -223,10 +184,6 @@ app.get("/profile", isLoggedIn, (req, res) => {
 //prettier-ignore
 app.put("/faves/:id", (req, res) => {
   let noteId = req.params.id;
-  // console.log(
-  //   "++++++++++++++++++note id++++++++++++++++++++++++++++++++++++++++"
-  // );
-  // console.log(noteId);
   db.note.update({ content: req.body.update }, { where: {id: noteId} })
     .then(function (updateNote) {
       console.log("____________updated note________________");
