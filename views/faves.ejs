@@ -3,7 +3,7 @@
 <h1>Favorite Drinks</h1>
 
 <% foundFaves.forEach(function(fave){ %>
-<ul>
+<ul class="no-bullets">
   <li>
     <h4><%= fave.dataValues.name %></h4>
       <form method="POST" action="/drinks/name/<%= fave.dataValues.name %>">
