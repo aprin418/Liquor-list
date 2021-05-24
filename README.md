@@ -104,6 +104,9 @@ Just search for an ingredient you want to be used within a cocktail. The results
 });
 ```
 
+# Known Issues
+
 # FUTURE CONSIDERATIONS
 
+Add 404 redirect routes for searching ingredients that dont exist.
 Adding mobile functionality, and Adding the ability to save a custom drink to your favorites.
