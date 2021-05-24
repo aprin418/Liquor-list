@@ -131,7 +131,7 @@ app.post("/faves", isLoggedIn, function (req, res) {
     });
 });
 
-app.get("/faves", (req, res) => {
+app.get("/faves", isLoggedIn, (req, res) => {
   db.faves.findAll().then((result) => {
     db.note.findAll().then((resultNote) => {
       res.render("faves", { foundFaves: result, foundNotes: resultNote });
@@ -139,7 +139,7 @@ app.get("/faves", (req, res) => {
   });
 });
 
-app.delete("/faves/:id", (req, res) => {
+app.delete("/faves/:id", isLoggedIn, (req, res) => {
   db.faves.destroy({
     where: {
       id: req.params.id,
@@ -148,7 +148,7 @@ app.delete("/faves/:id", (req, res) => {
   res.redirect("/faves");
 });
 
-app.delete("/notes/:id", (req, res) => {
+app.delete("/notes/:id", isLoggedIn, (req, res) => {
   db.note.destroy({
     where: {
       id: req.params.id,
@@ -182,7 +182,7 @@ app.get("/profile", isLoggedIn, (req, res) => {
 });
 
 //prettier-ignore
-app.put("/faves/:id", (req, res) => {
+app.put("/faves/:id", isLoggedIn, (req, res) => {
   let noteId = req.params.id;
   db.note.update({ content: req.body.update }, { where: {id: noteId} })
     .then(function (updateNote) {
