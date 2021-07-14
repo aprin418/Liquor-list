@@ -11,7 +11,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <ul class="no-bullets">
+      <ul class="no-bullets" style="text-align: right">
         <% drinkInstructions.forEach(eachDir => { %> <% if (eachDir !== null) {
         %>
         <li><%= eachDir %></li>
@@ -19,7 +19,7 @@
       </ul>
     </div>
     <div class="col">
-      <ul class="no-bullets">
+      <ul class="no-bullets" style="text-align: left">
         <% drinkIngredient.forEach(eachIng => { %> <% if (eachIng !== null) { %>
         <li><%= eachIng %></li>
         <% } %> <% }) %>
