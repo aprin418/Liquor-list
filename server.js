@@ -40,7 +40,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(layouts);
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("home");
 });
 
 app.use("/auth", require("./controllers/auth"));
